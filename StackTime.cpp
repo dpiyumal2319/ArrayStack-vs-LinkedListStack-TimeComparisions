@@ -1,6 +1,9 @@
 #include <iostream>
 #include <chrono>
 #include <fstream>
+#include <vector>
+#include <algorithm>
+#include <climits>
 
 using namespace std;
 
@@ -170,11 +173,17 @@ public:
 
     void display()
     {
+        vector<int> numbers;
         Node *temp = head;
         while (temp != nullptr)
         {
-            cout << temp->value << " ";
+            numbers.push_back(temp->value);
             temp = temp->next;
+        }
+        reverse(numbers.begin(), numbers.end());
+        for (int num : numbers)
+        {
+            cout << num << " ";
         }
         cout << endl;
     }
