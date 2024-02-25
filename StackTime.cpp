@@ -182,6 +182,15 @@ public:
 
 int main()
 {
+    chrono::high_resolution_clock::time_point start1;
+    chrono::high_resolution_clock::time_point end1;
+    chrono::high_resolution_clock::time_point start2;
+    chrono::high_resolution_clock::time_point end2;
+    int elapsed_time1;
+    int elapsed_time2;
+    int average_time1;
+    int average_time2;
+
     ArrayStack aStack(20);
     LinkedListStack lStack;
     int arr[] = {8, 10, 5, 11, 15, 23, 6, 18, 20, 17, 4, 30, 3, 1};
@@ -194,87 +203,100 @@ int main()
          << " "
          << "LinkedListStack" << endl;
 
+    // Average time for pushing 10 elements
+    elapsed_time1 = 0;
+    elapsed_time2 = 0;
     for (int i = 0; i < 10; i++)
     {
-        file << "Push"
-             << "(" << arr[i] << ")"
-             << " ";
-
-        chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+        start1 = chrono::high_resolution_clock::now();
         aStack.push(arr[i]);
-        chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
+        end1 = chrono::high_resolution_clock::now();
+        elapsed_time1 += chrono::duration_cast<chrono::nanoseconds>(end1 - start1).count();
 
-        start = chrono::high_resolution_clock::now();
+        start2 = chrono::high_resolution_clock::now();
         lStack.push(arr[i]);
-        end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        file << endl;
+        end2 = chrono::high_resolution_clock::now();
+        elapsed_time2 += chrono::duration_cast<chrono::nanoseconds>(end2 - start2).count();
     }
+    average_time1 = elapsed_time1 / 10;
+    average_time2 = elapsed_time2 / 10;
+    file << "AveragePushTime1"
+         << " ";
+    file << average_time1 << " " << average_time2 << endl;
 
-    int j = 0;
+    // Average time for popping 5 elements
+    elapsed_time1 = 0;
+    elapsed_time2 = 0;
     for (int i = 0; i < 5; i++)
     {
-        file << "Pop" << j++ << " ";
-
-        chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+        chrono::high_resolution_clock::time_point start1 = chrono::high_resolution_clock::now();
         aStack.pop();
-        chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
+        chrono::high_resolution_clock::time_point end1 = chrono::high_resolution_clock::now();
+        elapsed_time1 += chrono::duration_cast<chrono::nanoseconds>(end1 - start1).count();
 
-        start = chrono::high_resolution_clock::now();
+        chrono::high_resolution_clock::time_point start2 = chrono::high_resolution_clock::now();
         lStack.pop();
-        end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        file << endl;
+        chrono::high_resolution_clock::time_point end2 = chrono::high_resolution_clock::now();
+        elapsed_time2 += chrono::duration_cast<chrono::nanoseconds>(end2 - start2).count();
     }
+    average_time1 = elapsed_time1 / 5;
+    average_time2 = elapsed_time2 / 5;
+    file << "AveragePopTime"
+         << " ";
+    file << average_time1 << " " << average_time2 << endl;
 
+    //Average Time for Display
+    start1 = chrono::high_resolution_clock::now();
+    aStack.display();
+    end1 = chrono::high_resolution_clock::now();
+    elapsed_time1 = chrono::duration_cast<chrono::nanoseconds>(end1 - start1).count();
+
+    start2 = chrono::high_resolution_clock::now();
+    lStack.display();
+    end2 = chrono::high_resolution_clock::now();
+    elapsed_time2 = chrono::duration_cast<chrono::nanoseconds>(end2 - start2).count();
     file << "Display"
          << " ";
-    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
-    aStack.display();
-    chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
+    file << elapsed_time1 << " " << elapsed_time2 << endl;
 
-    start = chrono::high_resolution_clock::now();
-    lStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
 
-    file << endl;
-
+    // Average time for pushing 4 elements
+    elapsed_time1 = 0;
+    elapsed_time2 = 0;
     for (int i = 10; i < 14; i++)
     {
-        file << "Push"
-             << "(" << arr[i] << ")"
-             << " ";
-
-        chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+        start1 = chrono::high_resolution_clock::now();
         aStack.push(arr[i]);
-        chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
+        end1 = chrono::high_resolution_clock::now();
+        elapsed_time1+= chrono::duration_cast<chrono::nanoseconds>(end1 - start1).count();
 
-        start = chrono::high_resolution_clock::now();
+        start2 = chrono::high_resolution_clock::now();
         lStack.push(arr[i]);
-        end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-        file << endl;
+        end2 = chrono::high_resolution_clock::now();
+        elapsed_time2 += chrono::duration_cast<chrono::nanoseconds>(end2 - start2).count();
     }
-
-    file << "Display"
+    average_time1 = elapsed_time1 / 4;
+    average_time2 = elapsed_time2 / 4;
+    file << "AveragePushTime2"
          << " ";
-    start = chrono::high_resolution_clock::now();
-    aStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
+    file << average_time1 << " " << average_time2 << endl;
 
-    start = chrono::high_resolution_clock::now();
+
+    // Average time for popping 3 elements
+    start1 = chrono::high_resolution_clock::now();
+    aStack.display();
+    end1 = chrono::high_resolution_clock::now();
+    elapsed_time1 = chrono::duration_cast<chrono::nanoseconds>(end1 - start1).count();
+
+    start2 = chrono::high_resolution_clock::now();
     lStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-    file << endl;
+    end2 = chrono::high_resolution_clock::now();
+    elapsed_time2 = chrono::duration_cast<chrono::nanoseconds>(end2 - start2).count();
+
+    file << "Display2"
+         << " ";
+    file << elapsed_time1 << " " << elapsed_time2 << endl;
+
 
     file.close();
 }
