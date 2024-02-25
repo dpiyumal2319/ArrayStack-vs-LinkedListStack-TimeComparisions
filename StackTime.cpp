@@ -213,6 +213,20 @@ int main()
         file << endl;
     }
 
+    file << "Display1"
+         << " ";
+    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+    aStack.display();
+    chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
+
+    start = chrono::high_resolution_clock::now();
+    lStack.display();
+    end = chrono::high_resolution_clock::now();
+    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
+
+    file << endl;
+
     int j = 0;
     for (int i = 0; i < 5; i++)
     {
@@ -231,11 +245,11 @@ int main()
         file << endl;
     }
 
-    file << "Display"
+    file << "Display2"
          << " ";
-    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+    start = chrono::high_resolution_clock::now();
     aStack.display();
-    chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
+    end = chrono::high_resolution_clock::now();
     file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
 
     start = chrono::high_resolution_clock::now();
@@ -263,7 +277,7 @@ int main()
         file << endl;
     }
 
-    file << "Display"
+    file << "Display3"
          << " ";
     start = chrono::high_resolution_clock::now();
     aStack.display();
