@@ -35,15 +35,15 @@ public:
     void push(int x)
     {
         top = top + 1;
-        if (top >= size)
+        if (top > size)
         {
             cout << "Stack Overflow" << endl;
-            return;
         }
         else
         {
             arr[top] = x;
         }
+        return;
     }
 
     int pop()
