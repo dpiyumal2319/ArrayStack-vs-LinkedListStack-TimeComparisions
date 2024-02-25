@@ -1,6 +1,9 @@
 #include <iostream>
-#include <fstream>
 #include <chrono>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+#include <climits>
 
 using namespace std;
 
@@ -32,15 +35,15 @@ public:
     void push(int x)
     {
         top = top + 1;
-        if (top >= size)
+        if (top > size)
         {
             cout << "Stack Overflow" << endl;
-            return;
         }
         else
         {
             arr[top] = x;
         }
+        return;
     }
 
     int pop()
@@ -170,11 +173,17 @@ public:
 
     void display()
     {
+        vector<int> numbers;
         Node *temp = head;
         while (temp != nullptr)
         {
-            cout << temp->value << " ";
+            numbers.push_back(temp->value);
             temp = temp->next;
+        }
+        reverse(numbers.begin(), numbers.end());
+        for (int num : numbers)
+        {
+            cout << num << " ";
         }
         cout << endl;
     }
@@ -184,111 +193,65 @@ int main()
 {
     ArrayStack aStack(20);
     LinkedListStack lStack;
-    int arr[] = {8, 10, 5, 11, 15, 23, 6, 18, 20, 17, 4, 30, 3, 1};
+    chrono::time_point<chrono::system_clock> start, end;
     ofstream file;
-    file.open("output.txt");
+    file.open("Output.txt");
 
-    file << "Operation"
-         << " "
-         << "ArrayStack"
-         << " "
-         << "LinkedListStack" << endl;
-
-    for (int i = 0; i < 10; i++)
-    {
-        file << "Push"
-             << "(" << arr[i] << ")"
-             << " ";
-
-        chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
-        aStack.push(arr[i]);
-        chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        start = chrono::high_resolution_clock::now();
-        lStack.push(arr[i]);
-        end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        file << endl;
-    }
-
-    file << "Display1"
-         << " ";
-    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
+    int elapsed_time = 0;
+    start = chrono::system_clock::now();
+    aStack.push(8);
+    aStack.push(10);
+    aStack.push(5);
+    aStack.push(11);
+    aStack.push(15);
+    aStack.push(23);
+    aStack.push(6);
+    aStack.push(18);
+    aStack.push(20);
+    aStack.push(17);
     aStack.display();
-    chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-    start = chrono::high_resolution_clock::now();
-    lStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-    file << endl;
-
-    int j = 0;
-    for (int i = 0; i < 5; i++)
-    {
-        file << "Pop" << j++ << " ";
-
-        chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
-        aStack.pop();
-        chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        start = chrono::high_resolution_clock::now();
-        lStack.pop();
-        end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        file << endl;
-    }
-
-    file << "Display2"
-         << " ";
-    start = chrono::high_resolution_clock::now();
+    aStack.pop();
+    aStack.pop();
+    aStack.pop();
+    aStack.pop();
+    aStack.pop();
     aStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-    start = chrono::high_resolution_clock::now();
-    lStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-    file << endl;
-
-    for (int i = 10; i < 14; i++)
-    {
-        file << "Push"
-             << "(" << arr[i] << ")"
-             << " ";
-
-        chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
-        aStack.push(arr[i]);
-        chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        start = chrono::high_resolution_clock::now();
-        lStack.push(arr[i]);
-        end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-        file << endl;
-    }
-
-    file << "Display3"
-         << " ";
-    start = chrono::high_resolution_clock::now();
+    aStack.push(4);
+    aStack.push(30);
+    aStack.push(3);
+    aStack.push(1);
     aStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
+    end = chrono::system_clock::now();
+    elapsed_time += chrono::duration_cast<chrono::microseconds>(end - start).count();
+    file << "Array Stack: " << elapsed_time << " microseconds" << endl;
 
-    start = chrono::high_resolution_clock::now();
+    elapsed_time = 0;
+    start = chrono::system_clock::now();
+    lStack.push(8);
+    lStack.push(10);
+    lStack.push(5);
+    lStack.push(11);
+    lStack.push(15);
+    lStack.push(23);
+    lStack.push(6);
+    lStack.push(18);
+    lStack.push(20);
+    lStack.push(17);
     lStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-    file << endl;
+    lStack.pop();
+    lStack.pop();
+    lStack.pop();
+    lStack.pop();
+    lStack.pop();
+    lStack.display();
+    lStack.push(4);
+    lStack.push(30);
+    lStack.push(3);
+    lStack.push(1);
+    lStack.display();
+    end = chrono::system_clock::now();
+    elapsed_time += chrono::duration_cast<chrono::microseconds>(end - start).count();
+    file << "Linked List Stack: " << elapsed_time << " microseconds" << endl;
 
     file.close();
 }
