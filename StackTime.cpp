@@ -1,6 +1,6 @@
 #include <iostream>
-#include <fstream>
 #include <chrono>
+#include <fstream>
 
 using namespace std;
 
@@ -184,97 +184,72 @@ int main()
 {
     ArrayStack aStack(20);
     LinkedListStack lStack;
-    int arr[] = {8, 10, 5, 11, 15, 23, 6, 18, 20, 17, 4, 30, 3, 1};
+    chrono::time_point<chrono::system_clock> start, end;
     ofstream file;
-    file.open("output.txt");
+    file.open("Output.txt");
 
-    file << "Operation"
-         << " "
-         << "ArrayStack"
-         << " "
-         << "LinkedListStack" << endl;
-
-    for (int i = 0; i < 10; i++)
+    int elapsed_time = 0;
+    for (int i = 0; i < 100; i++)
     {
-        file << "Push"
-             << "(" << arr[i] << ")"
-             << " ";
-
-        chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
-        aStack.push(arr[i]);
-        chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        start = chrono::high_resolution_clock::now();
-        lStack.push(arr[i]);
-        end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        file << endl;
+        ArrayStack aStackCopy = aStack;
+        start = chrono::system_clock::now();
+        aStackCopy.push(8);
+        aStackCopy.push(10);
+        aStackCopy.push(5);
+        aStackCopy.push(11);
+        aStackCopy.push(15);
+        aStackCopy.push(23);
+        aStackCopy.push(6);
+        aStackCopy.push(18);
+        aStackCopy.push(20);
+        aStackCopy.push(17);
+        aStackCopy.display();
+        aStackCopy.pop();
+        aStackCopy.pop();
+        aStackCopy.pop();
+        aStackCopy.pop();
+        aStackCopy.pop();
+        aStackCopy.display();
+        aStackCopy.push(4);
+        aStackCopy.push(30);
+        aStackCopy.push(3);
+        aStackCopy.push(1);
+        aStackCopy.display();
+        end = chrono::system_clock::now();
+        elapsed_time += chrono::duration_cast<chrono::microseconds>(end - start).count();
     }
+    file << "Array Stack: " << elapsed_time / 100 << " microseconds" << endl;
 
-    int j = 0;
-    for (int i = 0; i < 5; i++)
+    elapsed_time = 0;
+    for (int i = 0; i < 100; i++)
     {
-        file << "Pop" << j++ << " ";
-
-        chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
-        aStack.pop();
-        chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        start = chrono::high_resolution_clock::now();
-        lStack.pop();
-        end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        file << endl;
+        LinkedListStack lStackCopy = lStack;
+        start = chrono::system_clock::now();
+        lStackCopy.push(8);
+        lStackCopy.push(10);
+        lStackCopy.push(5);
+        lStackCopy.push(11);
+        lStackCopy.push(15);
+        lStackCopy.push(23);
+        lStackCopy.push(6);
+        lStackCopy.push(18);
+        lStackCopy.push(20);
+        lStackCopy.push(17);
+        lStackCopy.display();
+        lStackCopy.pop();
+        lStackCopy.pop();
+        lStackCopy.pop();
+        lStackCopy.pop();
+        lStackCopy.pop();
+        lStackCopy.display();
+        lStackCopy.push(4);
+        lStackCopy.push(30);
+        lStackCopy.push(3);
+        lStackCopy.push(1);
+        lStackCopy.display();
+        end = chrono::system_clock::now();
+        elapsed_time += chrono::duration_cast<chrono::microseconds>(end - start).count();
     }
-
-    file << "Display"
-         << " ";
-    chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
-    aStack.display();
-    chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-    start = chrono::high_resolution_clock::now();
-    lStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-    file << endl;
-
-    for (int i = 10; i < 14; i++)
-    {
-        file << "Push"
-             << "(" << arr[i] << ")"
-             << " ";
-
-        chrono::high_resolution_clock::time_point start = chrono::high_resolution_clock::now();
-        aStack.push(arr[i]);
-        chrono::high_resolution_clock::time_point end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-        start = chrono::high_resolution_clock::now();
-        lStack.push(arr[i]);
-        end = chrono::high_resolution_clock::now();
-        file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-        file << endl;
-    }
-
-    file << "Display"
-         << " ";
-    start = chrono::high_resolution_clock::now();
-    aStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-
-    start = chrono::high_resolution_clock::now();
-    lStack.display();
-    end = chrono::high_resolution_clock::now();
-    file << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << " ";
-    file << endl;
-
+    file << "Linked List Stack: " << elapsed_time / 100 << " microseconds" << endl;
     file.close();
 }
